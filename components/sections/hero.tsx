@@ -11,31 +11,31 @@ const HeroOrbit = dynamic(() => import("@/components/hero-orbit").then((mod) => 
 
 export function Hero() {
   return (
-    <section className="relative min-h-[92svh] overflow-hidden pb-20 pt-28">
+    <section className="relative min-h-[92svh] overflow-hidden pb-14 pt-20 sm:pb-20 sm:pt-28">
       <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top_left,_rgba(124,231,200,0.14),transparent_24rem),radial-gradient(circle_at_bottom_right,_rgba(255,138,122,0.14),transparent_26rem)]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[42rem] blur-3xl bg-[radial-gradient(circle,_rgba(124,231,200,0.12),transparent_34%)]" />
       <HeroOrbit />
 
-      <div className="section-shell grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="section-shell grid items-center gap-10 lg:gap-14 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-          <Badge className="mb-6 border-primary/30 bg-primary/10 text-primary inline-flex items-center gap-2">
+          <Badge className="mb-5 sm:mb-6 border-primary/30 bg-primary/10 text-primary inline-flex items-center gap-2">
             <CodeBracketSquareIcon className="h-4 w-4" />
             MERN Stack Portfolio
           </Badge>
 
-          <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-balance text-base-content sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-balance text-base-content sm:text-5xl lg:text-7xl">
             Harshit Mishra
           </h1>
 
-          <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance text-base-content sm:text-6xl lg:text-4xl">
+          <h2 className="max-w-3xl text-xl font-semibold tracking-tight text-balance text-base-content sm:text-2xl lg:text-4xl mt-1">
             MERN Stack Developer
-          </h1>
+          </h2>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted md:text-xl">
-          BCA Student passionate about building full-stack web apps with MongoDB, Express, React & Node.js.
+          <p className="mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8 md:text-xl">
+            BCA Student passionate about building full-stack web apps with MongoDB, Express, React & Node.js.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <a href="#contact" className="btn btn-primary gap-2 px-5 py-3">
               <EnvelopeIcon className="h-4 w-4" />
               Contact me
@@ -50,11 +50,11 @@ export function Hero() {
             </a>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid gap-3 grid-cols-3 sm:mt-10">
             {stats.map((stat) => (
-              <div key={stat.label} className="rounded-[1.5rem] border border-primary/10 bg-white/5 p-5 text-center backdrop-blur">
-                <p className="text-3xl font-semibold text-base-content">{stat.value}{stat.suffix}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-muted">{stat.label}</p>
+              <div key={stat.label} className="rounded-[1.5rem] border border-primary/10 bg-white/5 p-3 sm:p-5 text-center backdrop-blur">
+                <p className="text-xl sm:text-3xl font-semibold text-base-content">{stat.value}{stat.suffix}</p>
+                <p className="mt-1 sm:mt-2 text-[10px] sm:text-xs uppercase tracking-[0.22em] text-muted">{stat.label}</p>
               </div>
             ))}
           </div>

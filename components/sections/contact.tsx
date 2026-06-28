@@ -27,7 +27,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 section-alt">
+    <section id="contact" className="py-14 sm:py-24 section-alt">
       <div className="section-shell">
         <SectionHeading eyebrow="Contact" title="Let's build something great together." />
         <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.85fr_1.15fr]">
@@ -92,7 +92,6 @@ export function Contact() {
               <textarea
                 style={{ resize: "none" }}
                 rows={4}
-                cols={50}
                 name="message"
                 required
                 minLength={10}

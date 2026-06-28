@@ -60,7 +60,7 @@ export function LeetCode() {
   const hardPct = Math.round((leetcodeStats.hard / leetcodeStats.totalHard) * 100);
 
   return (
-    <section id="leetcode" className="py-24 section-alt">
+    <section id="leetcode" className="py-14 sm:py-24 section-alt">
       <div className="section-shell">
         <SectionHeading eyebrow="LeetCode" title="Building algorithmic thinking, one problem at a time." />
         <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
@@ -79,7 +79,7 @@ export function LeetCode() {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-[140px_1fr]">
-              <div className="relative flex h-32 w-32 items-center justify-center rounded-[1.75rem] bg-base-200 shadow-soft">
+              <div className="relative mx-auto flex h-32 w-32 items-center justify-center rounded-[1.75rem] bg-base-200 shadow-soft">
                 <svg viewBox="0 0 100 100" className="h-28 w-28 -rotate-90 text-primary opacity-70">
                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="8" className="opacity-10" />
                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round"
@@ -113,7 +113,7 @@ export function LeetCode() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {[
                 { icon: <FireIcon className="h-4 w-4 text-orange-400" />, label: "Max Streak", value: `${leetcodeStats.maxStreak} days` },
                 { icon: <CalendarDaysIcon className="h-4 w-4 text-primary" />, label: "Active Days", value: `${leetcodeStats.activeDays}` },
@@ -153,7 +153,7 @@ export function LeetCode() {
               <h3 className="font-semibold mb-3 text-base-content">Focus Areas</h3>
               <div className="flex flex-wrap gap-2">
                 {["Strings", "Arrays", "Two Pointers", "Sliding Window", "Stack", "Palindrome", "Hashing", "C++", "Python"].map((tag) => (
-                  <span key={tag} className="rounded-full border border-primary/20 bg-primary/8 px-3 py-1 text-xs text-primary font-medium">{tag}</span>
+                  <span key={tag} className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs text-primary font-medium">{tag}</span>
                 ))}
               </div>
               <p className="mt-4 text-sm text-muted leading-6">

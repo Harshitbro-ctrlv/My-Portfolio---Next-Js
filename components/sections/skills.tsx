@@ -23,7 +23,7 @@ const groupIcons: Record<string, React.ReactNode> = {
 
 export function Skills() {
   return (
-    <section id="skills" className="section-alt py-24">
+    <section id="skills" className="section-alt py-14 sm:py-24">
       <div className="section-shell">
         <SectionHeading eyebrow="Skills" title="A MERN-focused stack built for real products." />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

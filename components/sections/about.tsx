@@ -4,7 +4,7 @@ import { MapPinIcon, AcademicCapIcon, BriefcaseIcon } from "@heroicons/react/24/
 
 export function About() {
   return (
-    <section id="about" className="py-24">
+    <section id="about" className="py-14 sm:py-24">
       <div className="section-shell">
         <SectionHeading eyebrow="About" title="MERN Stack learner, building real things." description={profile.about} />
         <div className="mb-10 flex flex-wrap justify-center gap-3">

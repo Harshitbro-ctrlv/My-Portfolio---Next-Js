@@ -86,8 +86,20 @@ body {
 }
 
 .section-shell {
-  width: min(1120px, calc(100% - 2rem));
+  width: min(1120px, calc(100% - 1.5rem));
   margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  .section-shell {
+    width: min(1120px, calc(100% - 3rem));
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-shell {
+    width: min(1120px, calc(100% - 4rem));
+  }
 }
 
 .text-balance {

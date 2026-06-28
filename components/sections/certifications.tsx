@@ -11,7 +11,7 @@ const issuerStyles: Record<string, string> = {
 
 export function Certifications() {
   return (
-    <section id="certifications" className="py-24 section-alt">
+    <section id="certifications" className="py-14 sm:py-24 section-alt">
       <div className="section-shell">
         <SectionHeading eyebrow="Certifications" title="Verified learning milestones." />
         <div className="grid gap-4 md:grid-cols-2">
@@ -29,7 +29,7 @@ export function Certifications() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-base font-semibold text-base-content leading-snug">{cert.title}</h3>
-                  <span className={`mt-2 inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border font-medium ${issuerStyles[cert.issuer] ?? "text-primary bg-primary/8 border-primary/20"}`}>
+                  <span className={`mt-2 inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border font-medium ${issuerStyles[cert.issuer] ?? "text-primary bg-primary/10 border-primary/20"}`}>
                     {cert.issuer}
                   </span>
                 </div>

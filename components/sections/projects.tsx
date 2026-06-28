@@ -6,7 +6,7 @@ import { Reveal, SectionHeading } from "@/components/ui/motion";
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="py-14 sm:py-24">
       <div className="section-shell">
         <SectionHeading eyebrow="Projects" title="Things I've built as a MERN Stack learner." />
         <div className="grid gap-5 lg:grid-cols-3">

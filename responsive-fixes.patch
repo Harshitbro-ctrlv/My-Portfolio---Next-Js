@@ -1,0 +1,286 @@
+diff --git a/app/globals.css b/app/globals.css
+index cd5fb61..9395d2d 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -86,10 +86,22 @@ body {
+ }
+ 
+ .section-shell {
+-  width: min(1120px, calc(100% - 2rem));
++  width: min(1120px, calc(100% - 1.5rem));
+   margin-inline: auto;
+ }
+ 
++@media (min-width: 640px) {
++  .section-shell {
++    width: min(1120px, calc(100% - 3rem));
++  }
++}
++
++@media (min-width: 1024px) {
++  .section-shell {
++    width: min(1120px, calc(100% - 4rem));
++  }
++}
++
+ .text-balance {
+   text-wrap: balance;
+ }
+diff --git a/components/sections/about.tsx b/components/sections/about.tsx
+index 7cecf8c..8e0a0e9 100644
+--- a/components/sections/about.tsx
++++ b/components/sections/about.tsx
+@@ -4,7 +4,7 @@ import { MapPinIcon, AcademicCapIcon, BriefcaseIcon } from "@heroicons/react/24/
+ 
+ export function About() {
+   return (
+-    <section id="about" className="py-24">
++    <section id="about" className="py-14 sm:py-24">
+       <div className="section-shell">
+         <SectionHeading eyebrow="About" title="MERN Stack learner, building real things." description={profile.about} />
+         <div className="mb-10 flex flex-wrap justify-center gap-3">
+diff --git a/components/sections/certifications.tsx b/components/sections/certifications.tsx
+index c8de5d3..970ac06 100644
+--- a/components/sections/certifications.tsx
++++ b/components/sections/certifications.tsx
+@@ -11,7 +11,7 @@ const issuerStyles: Record<string, string> = {
+ 
+ export function Certifications() {
+   return (
+-    <section id="certifications" className="py-24 section-alt">
++    <section id="certifications" className="py-14 sm:py-24 section-alt">
+       <div className="section-shell">
+         <SectionHeading eyebrow="Certifications" title="Verified learning milestones." />
+         <div className="grid gap-4 md:grid-cols-2">
+@@ -29,7 +29,7 @@ export function Certifications() {
+                 </div>
+                 <div className="flex-1">
+                   <h3 className="text-base font-semibold text-base-content leading-snug">{cert.title}</h3>
+-                  <span className={`mt-2 inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border font-medium ${issuerStyles[cert.issuer] ?? "text-primary bg-primary/8 border-primary/20"}`}>
++                  <span className={`mt-2 inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border font-medium ${issuerStyles[cert.issuer] ?? "text-primary bg-primary/10 border-primary/20"}`}>
+                     {cert.issuer}
+                   </span>
+                 </div>
+diff --git a/components/sections/contact.tsx b/components/sections/contact.tsx
+index 2d1447d..8574a11 100644
+--- a/components/sections/contact.tsx
++++ b/components/sections/contact.tsx
+@@ -27,7 +27,7 @@ export function Contact() {
+   }
+ 
+   return (
+-    <section id="contact" className="py-24 section-alt">
++    <section id="contact" className="py-14 sm:py-24 section-alt">
+       <div className="section-shell">
+         <SectionHeading eyebrow="Contact" title="Let's build something great together." />
+         <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+@@ -92,7 +92,6 @@ export function Contact() {
+               <textarea
+                 style={{ resize: "none" }}
+                 rows={4}
+-                cols={50}
+                 name="message"
+                 required
+                 minLength={10}
+diff --git a/components/sections/hero.tsx b/components/sections/hero.tsx
+index 2b508ce..492614e 100644
+--- a/components/sections/hero.tsx
++++ b/components/sections/hero.tsx
+@@ -11,31 +11,31 @@ const HeroOrbit = dynamic(() => import("@/components/hero-orbit").then((mod) =>
+ 
+ export function Hero() {
+   return (
+-    <section className="relative min-h-[92svh] overflow-hidden pb-20 pt-28">
++    <section className="relative min-h-[92svh] overflow-hidden pb-14 pt-20 sm:pb-20 sm:pt-28">
+       <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top_left,_rgba(124,231,200,0.14),transparent_24rem),radial-gradient(circle_at_bottom_right,_rgba(255,138,122,0.14),transparent_26rem)]" />
+       <div className="absolute inset-x-0 top-0 -z-10 h-[42rem] blur-3xl bg-[radial-gradient(circle,_rgba(124,231,200,0.12),transparent_34%)]" />
+       <HeroOrbit />
+ 
+-      <div className="section-shell grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
++      <div className="section-shell grid items-center gap-10 lg:gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+         <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+-          <Badge className="mb-6 border-primary/30 bg-primary/10 text-primary inline-flex items-center gap-2">
++          <Badge className="mb-5 sm:mb-6 border-primary/30 bg-primary/10 text-primary inline-flex items-center gap-2">
+             <CodeBracketSquareIcon className="h-4 w-4" />
+             MERN Stack Portfolio
+           </Badge>
+ 
+-          <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-balance text-base-content sm:text-6xl lg:text-7xl">
++          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-balance text-base-content sm:text-5xl lg:text-7xl">
+             Harshit Mishra
+           </h1>
+ 
+-          <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance text-base-content sm:text-6xl lg:text-4xl">
++          <h2 className="max-w-3xl text-xl font-semibold tracking-tight text-balance text-base-content sm:text-2xl lg:text-4xl mt-1">
+             MERN Stack Developer
+-          </h1>
++          </h2>
+ 
+-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted md:text-xl">
+-          BCA Student passionate about building full-stack web apps with MongoDB, Express, React & Node.js.
++          <p className="mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8 md:text-xl">
++            BCA Student passionate about building full-stack web apps with MongoDB, Express, React & Node.js.
+           </p>
+ 
+-          <div className="mt-10 flex flex-wrap gap-3">
++          <div className="mt-8 flex flex-wrap gap-3">
+             <a href="#contact" className="btn btn-primary gap-2 px-5 py-3">
+               <EnvelopeIcon className="h-4 w-4" />
+               Contact me
+@@ -50,11 +50,11 @@ export function Hero() {
+             </a>
+           </div>
+ 
+-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
++          <div className="mt-8 grid gap-3 grid-cols-3 sm:mt-10">
+             {stats.map((stat) => (
+-              <div key={stat.label} className="rounded-[1.5rem] border border-primary/10 bg-white/5 p-5 text-center backdrop-blur">
+-                <p className="text-3xl font-semibold text-base-content">{stat.value}{stat.suffix}</p>
+-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-muted">{stat.label}</p>
++              <div key={stat.label} className="rounded-[1.5rem] border border-primary/10 bg-white/5 p-3 sm:p-5 text-center backdrop-blur">
++                <p className="text-xl sm:text-3xl font-semibold text-base-content">{stat.value}{stat.suffix}</p>
++                <p className="mt-1 sm:mt-2 text-[10px] sm:text-xs uppercase tracking-[0.22em] text-muted">{stat.label}</p>
+               </div>
+             ))}
+           </div>
+diff --git a/components/sections/leetcode.tsx b/components/sections/leetcode.tsx
+index 88f765d..f940155 100644
+--- a/components/sections/leetcode.tsx
++++ b/components/sections/leetcode.tsx
+@@ -60,7 +60,7 @@ export function LeetCode() {
+   const hardPct = Math.round((leetcodeStats.hard / leetcodeStats.totalHard) * 100);
+ 
+   return (
+-    <section id="leetcode" className="py-24 section-alt">
++    <section id="leetcode" className="py-14 sm:py-24 section-alt">
+       <div className="section-shell">
+         <SectionHeading eyebrow="LeetCode" title="Building algorithmic thinking, one problem at a time." />
+         <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+@@ -79,7 +79,7 @@ export function LeetCode() {
+             </div>
+ 
+             <div className="grid gap-6 lg:grid-cols-[140px_1fr]">
+-              <div className="relative flex h-32 w-32 items-center justify-center rounded-[1.75rem] bg-base-200 shadow-soft">
++              <div className="relative mx-auto flex h-32 w-32 items-center justify-center rounded-[1.75rem] bg-base-200 shadow-soft">
+                 <svg viewBox="0 0 100 100" className="h-28 w-28 -rotate-90 text-primary opacity-70">
+                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="8" className="opacity-10" />
+                   <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round"
+@@ -113,7 +113,7 @@ export function LeetCode() {
+               </div>
+             </div>
+ 
+-            <div className="grid grid-cols-3 gap-3">
++            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+               {[
+                 { icon: <FireIcon className="h-4 w-4 text-orange-400" />, label: "Max Streak", value: `${leetcodeStats.maxStreak} days` },
+                 { icon: <CalendarDaysIcon className="h-4 w-4 text-primary" />, label: "Active Days", value: `${leetcodeStats.activeDays}` },
+@@ -153,7 +153,7 @@ export function LeetCode() {
+               <h3 className="font-semibold mb-3 text-base-content">Focus Areas</h3>
+               <div className="flex flex-wrap gap-2">
+                 {["Strings", "Arrays", "Two Pointers", "Sliding Window", "Stack", "Palindrome", "Hashing", "C++", "Python"].map((tag) => (
+-                  <span key={tag} className="rounded-full border border-primary/20 bg-primary/8 px-3 py-1 text-xs text-primary font-medium">{tag}</span>
++                  <span key={tag} className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs text-primary font-medium">{tag}</span>
+                 ))}
+               </div>
+               <p className="mt-4 text-sm text-muted leading-6">
+diff --git a/components/sections/projects.tsx b/components/sections/projects.tsx
+index d04031a..dacaa9a 100644
+--- a/components/sections/projects.tsx
++++ b/components/sections/projects.tsx
+@@ -6,7 +6,7 @@ import { Reveal, SectionHeading } from "@/components/ui/motion";
+ 
+ export function Projects() {
+   return (
+-    <section id="projects" className="py-24">
++    <section id="projects" className="py-14 sm:py-24">
+       <div className="section-shell">
+         <SectionHeading eyebrow="Projects" title="Things I've built as a MERN Stack learner." />
+         <div className="grid gap-5 lg:grid-cols-3">
+diff --git a/components/sections/skills.tsx b/components/sections/skills.tsx
+index ab04aa0..b3bddbe 100644
+--- a/components/sections/skills.tsx
++++ b/components/sections/skills.tsx
+@@ -23,7 +23,7 @@ const groupIcons: Record<string, React.ReactNode> = {
+ 
+ export function Skills() {
+   return (
+-    <section id="skills" className="section-alt py-24">
++    <section id="skills" className="section-alt py-14 sm:py-24">
+       <div className="section-shell">
+         <SectionHeading eyebrow="Skills" title="A MERN-focused stack built for real products." />
+         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+diff --git a/components/sections/testimonials.tsx b/components/sections/testimonials.tsx
+index c33afe0..659dda4 100644
+--- a/components/sections/testimonials.tsx
++++ b/components/sections/testimonials.tsx
+@@ -16,7 +16,7 @@ const testimonials = [
+ 
+ export function Testimonials() {
+   return (
+-    <section className="py-24">
++    <section className="py-14 sm:py-24">
+       <div className="section-shell">
+         <SectionHeading eyebrow="Testimonials" title="Designed for social proof when you are ready." />
+         <div className="grid gap-4 md:grid-cols-2">
+@@ -24,10 +24,10 @@ export function Testimonials() {
+             <Reveal key={testimonial.name} delay={index * 0.08}>
+               <article className="glass rounded-lg p-6">
+                 <Quote className="text-primary" />
+-                <p className="mt-5 text-lg leading-8 text-white/72">{testimonial.quote}</p>
++                <p className="mt-5 text-lg leading-8 text-muted">{testimonial.quote}</p>
+                 <div className="mt-6">
+                   <p className="font-semibold">{testimonial.name}</p>
+-                  <p className="text-sm text-white/48">{testimonial.role}</p>
++                  <p className="text-sm text-muted-2">{testimonial.role}</p>
+                 </div>
+               </article>
+             </Reveal>
+diff --git a/components/sections/timelines.tsx b/components/sections/timelines.tsx
+index e393e8a..56860b4 100644
+--- a/components/sections/timelines.tsx
++++ b/components/sections/timelines.tsx
+@@ -5,13 +5,13 @@ import { Timeline } from "@/components/ui/timeline";
+ export function ExperienceEducation() {
+   return (
+     <>
+-      <section id="experience" className="py-24">
++      <section id="experience" className="py-14 sm:py-24">
+         <div className="section-shell">
+           <SectionHeading eyebrow="Experience" title="Work shaped around clear execution." />
+           <Timeline items={experience} />
+         </div>
+       </section>
+-      <section id="education" className="bg-white/[0.025] py-24">
++      <section id="education" className="section-alt py-14 sm:py-24">
+         <div className="section-shell">
+           <SectionHeading eyebrow="Education" title="Academic foundation for practical engineering." />
+           <Timeline items={education} />
+diff --git a/features/command-palette/command-palette.tsx b/features/command-palette/command-palette.tsx
+index df8a78e..397bfe8 100644
+--- a/features/command-palette/command-palette.tsx
++++ b/features/command-palette/command-palette.tsx
+@@ -18,13 +18,13 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
+           onClick={() => onOpenChange(false)}
+         >
+           <motion.div
+-            className="mx-auto mt-24 max-w-xl overflow-hidden rounded-lg border border-white/12 bg-base-200 shadow-soft"
++            className="mx-auto mt-12 sm:mt-24 max-w-xl overflow-hidden rounded-lg border border-subtle bg-base-200 shadow-soft"
+             initial={{ opacity: 0, y: 20, scale: 0.98 }}
+             animate={{ opacity: 1, y: 0, scale: 1 }}
+             exit={{ opacity: 0, y: 16, scale: 0.98 }}
+             onClick={(event) => event.stopPropagation()}
+           >
+-            <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3 text-white/62">
++            <div className="flex items-center gap-3 border-b border-subtle px-4 py-3 text-muted">
+               <Search size={18} />
+               <span className="text-sm">Jump to a section</span>
+             </div>
+@@ -36,7 +36,7 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
+                     key={item.href}
+                     href={item.href}
+                     onClick={() => onOpenChange(false)}
+-                    className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-white/76 transition hover:bg-white/8 hover:text-white"
++                    className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-3 transition hover:bg-subtle hover:text-base-content"
+                   >
+                     <Icon size={17} className="text-primary" />
+                     {item.label}

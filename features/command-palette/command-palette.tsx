@@ -18,13 +18,13 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
           onClick={() => onOpenChange(false)}
         >
           <motion.div
-            className="mx-auto mt-24 max-w-xl overflow-hidden rounded-lg border border-white/12 bg-base-200 shadow-soft"
+            className="mx-auto mt-12 sm:mt-24 max-w-xl overflow-hidden rounded-lg border border-subtle bg-base-200 shadow-soft"
             initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3 text-white/62">
+            <div className="flex items-center gap-3 border-b border-subtle px-4 py-3 text-muted">
               <Search size={18} />
               <span className="text-sm">Jump to a section</span>
             </div>
@@ -36,7 +36,7 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
                     key={item.href}
                     href={item.href}
                     onClick={() => onOpenChange(false)}
-                    className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-white/76 transition hover:bg-white/8 hover:text-white"
+                    className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-3 transition hover:bg-subtle hover:text-base-content"
                   >
                     <Icon size={17} className="text-primary" />
                     {item.label}
