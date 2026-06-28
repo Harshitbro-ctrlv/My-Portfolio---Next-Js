@@ -11,6 +11,8 @@ export const profile = {
   leetcode: "https://leetcode.com/u/mish123_harshit/",
   resume: "/resume.pdf",
   avatar: "/profile.jpeg",
+  about:
+    "I'm a BCA student at National PG College, Lucknow, learning MERN Stack development and building real-world full-stack web applications. I enjoy combining frontend polish with solid backend logic — crafting apps that are fast, responsive, and clean.",
   college: "National PG College, Lucknow",
   degree: "Bachelor of Computer Applications (BCA)",
   note: ""
