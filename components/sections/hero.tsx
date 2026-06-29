@@ -1,26 +1,16 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ArrowRightIcon, ArrowDownTrayIcon, EnvelopeIcon, CodeBracketSquareIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import { profile, stats } from "@/lib/profile";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
-
-const HeroOrbit = dynamic(() => import("@/components/hero-orbit").then((mod) => mod.HeroOrbit), { ssr: false });
 
 export function Hero() {
-  const [isDesktop, setIsDesktop] = useState(false);
-
-useEffect(() => {
-  setIsDesktop(window.innerWidth >= 768);
-}, []);
   return (
     <section className="relative min-h-[92svh] overflow-hidden pb-14 pt-20 sm:pb-20 sm:pt-28">
       <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top_left,_rgba(124,231,200,0.14),transparent_24rem),radial-gradient(circle_at_bottom_right,_rgba(255,138,122,0.14),transparent_26rem)]" />
       <div className="absolute inset-x-0 top-0 -z-10 h-[42rem] blur-3xl bg-[radial-gradient(circle,_rgba(124,231,200,0.12),transparent_34%)]" />
-      {isDesktop && <HeroOrbit />}
 
       <div className="section-shell grid items-center gap-10 lg:gap-14 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
