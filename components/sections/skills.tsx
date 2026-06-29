@@ -1,24 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { skills, techStack } from "@/lib/profile";
-import { SectionHeading } from "@/components/ui/motion";
-import { 
-  SparklesIcon, 
-  CommandLineIcon, 
-  CpuChipIcon, 
+import { techStack, skills } from "@/lib/profile";
+import { Reveal, SectionHeading } from "@/components/ui/motion";
+import {
+  SparklesIcon,
+  CommandLineIcon,
+  CpuChipIcon,
   CodeBracketIcon,
   WrenchIcon,
-  CircleStackIcon 
+  CircleStackIcon,
 } from "@heroicons/react/24/outline";
 
 const groupIcons: Record<string, React.ReactNode> = {
-  Frontend: <CodeBracketIcon className="w-6 h-6" />,
-  Backend: <CpuChipIcon className="w-6 h-6" />,
-  Database: <CircleStackIcon className="w-6 h-6" />,
-  Languages: <CommandLineIcon className="w-6 h-6" />,
-  "AI & Tools": <SparklesIcon className="w-6 h-6" />,
-  "Dev Tools": <WrenchIcon className="w-6 h-6" />
+  Frontend:    <CodeBracketIcon  className="w-5 h-5" />,
+  Backend:     <CpuChipIcon      className="w-5 h-5" />,
+  Database:    <CircleStackIcon  className="w-5 h-5" />,
+  Languages:   <CommandLineIcon  className="w-5 h-5" />,
+  "AI & Tools":<SparklesIcon     className="w-5 h-5" />,
+  "Dev Tools": <WrenchIcon       className="w-5 h-5" />,
 };
 
 export function Skills() {
@@ -26,38 +25,54 @@ export function Skills() {
     <section id="skills" className="section-alt py-14 sm:py-24">
       <div className="section-shell">
         <SectionHeading eyebrow="Skills" title="A MERN-focused stack built for real products." />
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+
+        {/* ── Skill cards: 1-col → 2-col (sm) → 3-col (lg) ── */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((group, index) => (
-            <motion.article key={group.title} className="glass rounded-xl p-6"
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: index * 0.04 }}
-              whileHover={{ y: -6, scale: 1.01 }}
-            >
-              <div className="text-base-content">
-                {groupIcons[group.title] ?? <WrenchIcon className="w-6 h-6" />}
-              </div>
-              <h3 className="mt-4 text-lg font-semibold text-base-content">{group.title}</h3>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span key={item} className="rounded-full border-subtle bg-subtle px-3 py-1 text-sm text-muted border">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </motion.article>
+            <Reveal key={group.title} delay={index * 0.05}>
+              <article className="glass h-full rounded-xl p-5 sm:p-6 hover:-translate-y-1.5 transition-transform duration-300">
+                <div className="text-primary">
+                  {groupIcons[group.title] ?? <WrenchIcon className="w-5 h-5" />}
+                </div>
+                <h3 className="mt-3 text-base font-semibold text-base-content sm:text-lg">
+                  {group.title}
+                </h3>
+                <div className="mt-4 flex flex-wrap gap-1.5 sm:gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border-subtle bg-subtle px-2.5 py-1 text-xs text-muted border sm:px-3"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
-        <div className="mt-14 overflow-hidden relative">
-          <motion.div className="flex gap-3 w-max"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          >
+
+        {/* ── Tech marquee with edge fades ── */}
+        <div
+          className="relative mt-12 overflow-hidden"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+          }}
+        >
+          {/* Pause on hover/focus for a11y */}
+          <div className="flex gap-3 w-max animate-[marquee_32s_linear_infinite] hover:[animation-play-state:paused]">
             {[...techStack, ...techStack].map((tech, i) => (
-              <span key={`${tech}-${i}`} className="rounded-full border-subtle bg-base-200 px-4 py-2 text-sm text-muted whitespace-nowrap shadow-sm border">
+              <span
+                key={`${tech}-${i}`}
+                className="rounded-full border-subtle bg-base-200 px-4 py-1.5 text-xs sm:text-sm text-muted whitespace-nowrap shadow-sm border"
+              >
                 {tech}
               </span>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

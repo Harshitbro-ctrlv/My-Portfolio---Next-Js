@@ -2,7 +2,7 @@
 
 import Lenis from "lenis";
 import { ArrowUpIcon, CommandLineIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CommandPalette } from "@/features/command-palette/command-palette";
 import { Navbar } from "@/components/navbar";
@@ -12,22 +12,24 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showTop, setShowTop] = useState(false);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 0.9 });
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.5, orientation: 'vertical' as const, gestureOrientation: 'vertical' as const });
+    lenisRef.current = lenis;
     let frame = 0;
     const raf = (time: number) => { lenis.raf(time); frame = requestAnimationFrame(raf); };
     frame = requestAnimationFrame(raf);
+    lenis.on('scroll', (e: { scroll: number; limit: number; velocity: number; direction: number; progress: number }) => {
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(height > 0 ? e.scroll / height : 0);
+      setShowTop(e.scroll > 720);
+    });
     setReady(true);
-    return () => { cancelAnimationFrame(frame); lenis.destroy(); };
+    return () => { cancelAnimationFrame(frame); lenis.destroy(); lenisRef.current = null; };
   }, []);
 
   useEffect(() => {
-    const onScroll = () => {
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(height > 0 ? window.scrollY / height : 0);
-      setShowTop(window.scrollY > 720);
-    };
     const onPointer = (event: PointerEvent) => {
       document.documentElement.style.setProperty("--cursor-x", `${event.clientX}px`);
       document.documentElement.style.setProperty("--cursor-y", `${event.clientY}px`);
@@ -38,20 +40,29 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         setPaletteOpen((open) => !open);
       }
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const onAnchorClick = (event: MouseEvent) => {
+      const target = (event.target as HTMLElement).closest('a[href^="#"]');
+      if (target && lenisRef.current) {
+        const href = target.getAttribute('href');
+        if (href && href !== '#') {
+          event.preventDefault();
+          lenisRef.current.scrollTo(href, { duration: 1.2, offset: -80 });
+        }
+      }
+    };
     window.addEventListener("pointermove", onPointer, { passive: true });
     window.addEventListener("keydown", onKey);
+    document.addEventListener("click", onAnchorClick);
     return () => {
-      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("keydown", onKey);
+      document.removeEventListener("click", onAnchorClick);
     };
   }, []);
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-[90] h-0.5 bg-primary transition-all" style={{ width: `${progress * 100}%` }} />
+      <div className="fixed left-0 top-0 z-[90] h-0.5 bg-primary progress-glow transition-all" style={{ width: `${progress * 100}%` }} />
       <div className="cursor-dot" />
       <AnimatePresence>
         {!ready ? (
@@ -63,7 +74,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <Navbar onOpenCommand={() => setPaletteOpen(true)} />
       {children}
       <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
-      <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      <button type="button" onClick={() => lenisRef.current?.scrollTo(0, { duration: 1.2 })}
         className={`btn btn-circle btn-primary fixed bottom-6 right-6 z-50 shadow-glow transition-all ${showTop ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"}`}
         aria-label="Back to top">
         <ArrowUpIcon className="h-4 w-4" />
