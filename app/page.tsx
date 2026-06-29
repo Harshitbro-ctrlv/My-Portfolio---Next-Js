@@ -9,6 +9,8 @@ import { Skills } from "@/components/sections/skills";
 import { LeetCode } from "@/components/sections/leetcode";
 import { Footer } from "@/components/footer";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <SiteShell>
