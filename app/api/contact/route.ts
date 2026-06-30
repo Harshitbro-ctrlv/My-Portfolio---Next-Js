@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { contactSchema, isRateLimited } from "@/lib/contact";
+import { profile } from "@/lib/profile";
 
 export const dynamic = "force-dynamic";
 
@@ -23,33 +24,41 @@ export async function POST(request: NextRequest) {
   }
 
   const { name, email, company, message } = parsed.data;
-  const required = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS", "CONTACT_TO_EMAIL", "CONTACT_FROM_EMAIL"] as const;
+  const required = ["SMTP_USER", "SMTP_PASS"] as const;
   const missing = required.filter((key) => !process.env[key]);
 
   if (missing.length) {
     return NextResponse.json(
-      { message: "Contact form is configured, but email credentials are not set yet." },
+      { message: `Email delivery is temporarily unavailable. Please email ${profile.email} directly.` },
       { status: 503 }
     );
   }
 
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT ?? 587),
-    secure: Number(process.env.SMTP_PORT ?? 587) === 465,
+    host: process.env.SMTP_HOST ?? "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT ?? 465),
+    secure: Number(process.env.SMTP_PORT ?? 465) === 465,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
     }
   });
 
-  await transporter.sendMail({
-    to: process.env.CONTACT_TO_EMAIL,
-    from: process.env.CONTACT_FROM_EMAIL,
-    replyTo: email,
-    subject: `Portfolio inquiry from ${name}`,
-    text: [`Name: ${name}`, `Email: ${email}`, `Company: ${company ?? "N/A"}`, "", message].join("\n")
-  });
+  try {
+    await transporter.sendMail({
+      to: profile.email,
+      from: process.env.CONTACT_FROM_EMAIL ?? process.env.SMTP_USER,
+      replyTo: email,
+      subject: `Portfolio inquiry from ${name}`,
+      text: [`Name: ${name}`, `Email: ${email}`, `Subject: ${company || "Portfolio inquiry"}`, "", message].join("\n")
+    });
+  } catch (error) {
+    console.error("Contact email delivery failed", error);
+    return NextResponse.json(
+      { message: `Message could not be delivered. Please email ${profile.email} directly.` },
+      { status: 502 }
+    );
+  }
 
   return NextResponse.json({ message: "Thanks. Your message has been sent." });
 }

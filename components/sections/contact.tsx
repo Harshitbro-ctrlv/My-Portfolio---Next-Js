@@ -4,6 +4,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { useState, useTransition } from "react";
 import { SectionHeading } from "@/components/ui/motion";
 import { EnvelopeIcon, ClockIcon, BriefcaseIcon } from "@heroicons/react/24/outline";
+import { profile } from "@/lib/profile";
 
 type Status = "idle" | "success" | "error";
 
@@ -14,15 +15,21 @@ export function Contact() {
 
   function submit(formData: FormData) {
     setStatus("idle");
+    setMessage("");
     startTransition(async () => {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        body: JSON.stringify(Object.fromEntries(formData)),
-        headers: { "Content-Type": "application/json" }
-      });
-      const payload = (await response.json()) as { message?: string };
-      setStatus(response.ok ? "success" : "error");
-      setMessage(payload.message ?? (response.ok ? "Message sent." : "Something went wrong."));
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          body: JSON.stringify(Object.fromEntries(formData)),
+          headers: { "Content-Type": "application/json" }
+        });
+        const payload = (await response.json()) as { message?: string };
+        setStatus(response.ok ? "success" : "error");
+        setMessage(payload.message ?? (response.ok ? "Message sent." : "Something went wrong."));
+      } catch {
+        setStatus("error");
+        setMessage(`Connection failed. Please email ${profile.email} directly.`);
+      }
     });
   }
 
@@ -38,17 +45,17 @@ export function Contact() {
             </p>
             <div className="space-y-4">
               {[
-                { icon: <EnvelopeIcon className="h-4 w-4" />, label: "Email", value: "harshitmis9091@gmail.com" },
+                { icon: <EnvelopeIcon className="h-4 w-4" />, label: "Email", value: profile.email, href: `mailto:${profile.email}` },
                 { icon: <ClockIcon className="h-4 w-4" />, label: "Response time", value: "Within 24–48 hours" },
                 { icon: <BriefcaseIcon className="h-4 w-4" />, label: "Availability", value: "Open to opportunities" }
-              ].map(({ icon, label, value }) => (
+              ].map(({ icon, label, value, href }) => (
                 <div key={label} className="flex items-center gap-3">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     {icon}
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-xs text-muted-2">{label}</p>
-                    <p className="text-sm font-medium text-base-content">{value}</p>
+                    {href ? <a href={href} className="break-all text-sm font-medium text-base-content transition-colors hover:text-primary">{value}</a> : <p className="text-sm font-medium text-base-content">{value}</p>}
                   </div>
                 </div>
               ))}
@@ -99,12 +106,12 @@ export function Contact() {
                 placeholder="Tell me about your project or idea..."
               />
             </label>
-            <button className="btn btn-primary mt-1 gap-2" disabled={pending} type="submit">
+            <button className="btn btn-primary premium-button mt-1 gap-2" disabled={pending} type="submit">
               <PaperAirplaneIcon className="h-4 w-4" />
               {pending ? "Sending..." : "Send Message"}
             </button>
             {message && (
-              <p className={`text-sm ${status === "success" ? "text-success" : "text-error"}`} role="status">
+              <p className={`text-sm ${status === "success" ? "text-success" : "text-error"}`} role="status" aria-live="polite">
                 {message}
               </p>
             )}

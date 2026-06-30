@@ -28,6 +28,7 @@ export type Project = {
   title: string;
   description: string;
   image: string;
+  video?: string;
   technologies: string[];
   github?: string;
   demo?: string;

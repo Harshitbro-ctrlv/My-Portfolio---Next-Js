@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export default function Home() {
   return (
     <SiteShell>
-      <main>
+      <main id="main-content">
         <Hero />
         <About />
         <Skills />

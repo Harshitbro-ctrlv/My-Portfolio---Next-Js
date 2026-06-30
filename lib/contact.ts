@@ -16,6 +16,12 @@ export function isRateLimited(key: string) {
   const now = Date.now();
   const current = hits.get(key);
 
+  if (hits.size > 1000) {
+    for (const [storedKey, hit] of hits) {
+      if (now > hit.resetAt) hits.delete(storedKey);
+    }
+  }
+
   if (!current || now > current.resetAt) {
     hits.set(key, { count: 1, resetAt: now + 60_000 });
     return false;
